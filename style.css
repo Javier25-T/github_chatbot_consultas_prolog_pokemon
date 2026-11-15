@@ -1,0 +1,94 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.A1 {
+    background-image: url(panjtanpak_graphics05-burger-pattern-7422088_1920.png);
+    background-size: cover;
+    background-attachment: fixed; /* mantiene el fondo estático al hacer scroll vertical */
+    padding-bottom: 120px; /* previene que los últimos mensajes queden ocultos */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 38px;
+    padding: 10px 20px;
+    background-size: auto;
+    background-image: url(noise-and-scratches-on-a-black-background.webp);
+}
+
+.header-titles {
+    text-align: left;
+    color: #a20c0c;
+}
+
+/* area del CHAT */
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+    padding: 0 20px;
+    max-width: 1000px;
+    margin: 0 auto; 
+}
+
+.mensaje-bot, .mensaje-usuario {
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.85); 
+    color: #000;
+}
+
+
+.mensaje-bot {
+    border: 2px solid blue;
+    width: 80%;
+    align-self: flex-start; 
+}
+
+
+.mensaje-usuario {
+    border: 2px solid red;
+    width: 30%;
+    align-self: flex-end; 
+    text-align: left; 
+}
+/* ------------------------------------------ */
+
+.sticky {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    padding: 20px;
+    box-sizing: border-box; 
+    border-top: 3px groove aqua; 
+    background-image: url(noise-and-scratches-on-a-black-background.webp);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.habla {
+    width: 60%; 
+    min-height: 40px; 
+    padding: 10px;
+    border: 2px groove red; 
+    color: white; 
+    text-align: left;
+    outline: none; 
+    word-wrap: break-word; 
+    background-color: #1a1a1a; 
+}
+
+
+.habla:empty:before {
+    content: attr(data-placeholder);
+    color: #888;
+    cursor: text;
+}
