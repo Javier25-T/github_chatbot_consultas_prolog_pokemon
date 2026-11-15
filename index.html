@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Hamburgesa IA</title>
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+
+    <body class="A1">
+        <section>
+            <header class="header">
+                <div class="header-titles">
+                    <h2><strong>Hamburgesa IA</strong></h2>
+                </div>
+            </header>
+        </section>
+
+        <!-- Contenedor central-->
+        <section class="chat-area" id="messages">
+            <!-- ejemplos estaticos-->
+            <div class="mensaje-usuario">este es el chatbot di hola</div>
+            <div class="mensaje-bot">hola humanos</div>
+        </section>
+
+        <section> 
+           <footer class="sticky">
+                <div class="habla" id="user-input" contenteditable="true" onkeypress="handleKeyPress(event)" data-placeholder="Escribe tu mensaje aquí..."></div>
+           </footer>
+        </section>
+
+        <!-- Logica de comunicación con el backend Python -->
+        <script>
+            async function sendMessage() {
+                const inputField = document.getElementById('user-input');
+                const message = inputField.textContent.trim(); 
+                if (!message) return;
+
+                // muestra el mensaje del usuario en la interfaz
+                appendMessage(message, 'mensaje-usuario');
+                inputField.textContent = ''; // limpia la barra de texto
+
+                try {
+                    // peticion post al codigo python intermediado
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ mensaje: message })
+                    });
+                    const data = await response.json();
+                    
+                    // muestra la respuesta del chatbot
+                    appendMessage(data.respuesta, 'mensaje-bot');
+                } catch (error) {
+                    appendMessage('Error: No se pudo conectar con el servidor backend.', 'mensaje-bot');
+                }
+            }
+
+            function appendMessage(text, className) {
+                const messagesDiv = document.getElementById('messages');
+                const msgDiv = document.createElement('div');
+                msgDiv.className = className;
+                msgDiv.textContent = text;
+                messagesDiv.appendChild(msgDiv);
+                
+                // mantiene el scroll automatico en el último mensaje
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+
+            function handleKeyPress(event) {
+                // envia el mensaje al presionar (Enter) sin hacer un salto de línea
+                if (event.key === 'Enter') {
+                    event.preventDefault(); 
+                    sendMessage();
+                }
+            }
+        </script>
+    </body>
+</html>
